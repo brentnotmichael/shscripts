@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# set variables for the time of day
+morning=6	# 6 am
+afternoon=12	# 12 noon
+evening=17	# 5 pm during standard time
+
+# get current time zone
+dst=$(date | awk '{print $5}' | cut -c2)	# PST or PDT
+
+# get current hour
+hour=$(date | awk '{print $4}' | awk -F: '{print $1}')
+
+# check timezone and adjust for daylight savings
+if [ $dst = "D" ]
+then
+    evening=18	# 6 pm during daylight savings
+else
+    evening=17  # 5 pm during standard time 
+fi
+
+# test code for hour
+if [ $1 ]
+then
+    hour=$1
+fi
+
+# check hour against time of day and set greeting
+
+if [ $hour -ge $evening ] 
+then
+    greeting="Good evening"
+elif [ $hour -ge $afternoon ]
+then
+    greeting="Good afternoon"
+elif [ $hour -ge $morning ]
+then
+    greeting="Good morning"
+else
+    greeting="You're up early"
+fi
+
+# echo greeting to user, username
+echo "$greeting, $(whoami)"
+

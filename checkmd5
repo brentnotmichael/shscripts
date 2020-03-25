@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# copy md5sum of $1 file to a scratch file, twice
+md5sum $1 | awk '{print $1}' > tempfile.a
+cp tempfile.a tempfile.b
+cat tempfile.a >> tempfile.b
+
+# copy tempfile.a, then append md5sum of $2 file to it
+cp tempfile.a tempfile.c
+md5sum $2 | awk '{print $1}' >> tempfile.c
+
+# diff tempfile.b and tempfile.c to see if the md5sums match
+diff tempfile.a tempfile.c
+
+# clean up tempfiles
+rm tempfile.a
+rm tempfile.b
+rm tempfile.c
+
