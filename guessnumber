@@ -11,10 +11,6 @@ echo $msgquit
 
 # Get a random number between 1 and 100
 luckynumber=$(( ( RANDOM % 100 )  + 1 ))  
-# if the number is 101, subtract 1
-if [ $luckynumber -eq 101 ]; then
-	set luckynumber=$luckynumber-1
-fi
 
 # loop while nailedit = false which is an until loop
 # until loops loop until the condition is true
