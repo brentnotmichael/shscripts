@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# define function for sorting the array
+sortarray () {
+ # sort the array
+# $IFS is a special shell variable, like $1 or $@
+# The "Internal Field Separator" (IFS) is used for
+# word splitting after expansion and to split lines
+# into words with the 'read' command
+# Here we are setting the field separator to '\n'
+# or a new line. Sort will then be able to sort our
+# array.  
+arr=("$@")
+    IFS=$'\n' rarr=($(sort <<<"${arr[*]}"))
+    unset IFS
+    printarray "${rarr[@]}"
+}
+
+# define function for printing the array
+printarray () {
+    arr=("$@")
+    for i in ${arr[@]}; do
+        echo $i
+    done
+}
+
+# arrays elements are separated by space
+student=('Gian' 'Steph' 'Faz' 'Mario' 'Vincent' 'Esra' 'Tora' 'Brent')
+
+echo "UNSORTED"
+printarray "${student[@]}" 
+echo
+echo "SORTED"
+sortarray "${student[@]}"
