@@ -56,5 +56,5 @@ done
 if [ $nailedit -eq 0 ]; then
 	echo "You made $guesscounter guesses and didn't guess the lucky number, which was $luckynumber."
 else
-	echo "Thank you for playing. You guessed the lucky number in $guesscounter guesses."
+	echo "You guessed the lucky number in $guesscounter guesses."
 fi
