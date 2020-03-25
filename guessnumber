@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# Purpose: Guessing game - Get the user to guess a number from 1 to 100
+
+quitword="q"
+msgquit="(type '$quitword' to quit)"
+
+echo 
+echo "Guess the number between 1 and 100!"
+echo $msgquit
+
+# Get a random number between 1 and 100
+luckynumber=$(( ( RANDOM % 100 )  + 1 ))  
+# if the number is 101, subtract 1
+if [ $luckynumber -eq 101 ]; then
+	set luckynumber=$luckynumber-1
+fi
+
+# loop while nailedit = false which is an until loop
+# until loops loop until the condition is true
+
+nailedit=0
+guesscounter=0
+helpcounter=0
+
+until [ $nailedit -eq 1 ] ; do
+	if [ $helpcounter -eq 5 ] ; then
+	    echo $msgquit
+	    (( helpcounter=0 ))
+	fi
+	echo
+	echo "Your guess:"
+	read guess
+
+	if [ $guess == $quitword ]; then
+		break
+	elif ! [[ "$guess" =~ ^[0-9]+$ ]]; then
+		echo "'$guess' is not a valid input."
+		echo $msgquit
+		(( helpcounter=0 ))
+		continue
+	elif [ $guess -eq $luckynumber ]; then
+		echo "Yes! $guess is the lucky number!"
+		(( nailedit=1 ))
+	elif [ $luckynumber -lt $guess ]; then
+		echo "Sorry, the lucky number is less than $guess."
+	elif [ $luckynumber -gt $guess ]; then
+		echo "Sorry, the lucky number is greater than $guess."
+	else
+		echo "'$guess' is not a valid input"
+		continue
+	fi
+	(( guesscounter++ ))
+	(( helpcounter++ ))
+done
+if [ $nailedit -eq 0 ]; then
+	echo "You made $guesscounter guesses and didn't guess the lucky number, which was $luckynumber."
+else
+	echo "Thank you for playing. You guessed the lucky number in $guesscounter guesses."
+fi
