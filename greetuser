@@ -41,5 +41,6 @@ else
 fi
 
 # echo greeting to user, username
-echo "$greeting, $(whoami). The current time and date is $(date)."
+echo "$greeting, $(whoami). The current time and date is $(date | awk '{print
+$5}')."
 
